@@ -5,19 +5,24 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module'
+import { MatTableModule } from '@angular/material/table'  
 import { RouterModule } from '@angular/router'
 import { WelcomeComponent } from './welcome/welcome.component'
 import { PortfolioComponent } from './portfolio/portfolio.component'
 
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    PortfolioComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    //MatTableModule,
     MaterialModule,
     HttpClientModule,
     RouterModule.forRoot([

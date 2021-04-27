@@ -1,0 +1,12 @@
+table {
+    width: 100%;
+}
+.mat-column-portfolioId {
+    flex: none;
+    width: 70px;
+}
+
+.mat-column-symbol {
+    flex: none;
+    width: 70px;
+}

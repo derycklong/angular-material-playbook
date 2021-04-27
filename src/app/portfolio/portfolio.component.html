@@ -1,3 +1,38 @@
-<div class="container p-3 my-3">
-    this is a portfolio page
-</div>
+<div class="container-fluid p-3 my-3">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+      
+        <!-- Position Column -->
+        <ng-container matColumnDef="portfolioId">
+          <th mat-header-cell *matHeaderCellDef> ID. </th>
+          <td mat-cell *matCellDef="let element"> {{element.portfolioId}} </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="symbol">
+          <th mat-header-cell *matHeaderCellDef> Symbol </th>
+          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="stockName">
+          <th mat-header-cell *matHeaderCellDef> StockName </th>
+          <td mat-cell *matCellDef="let element"> {{element.stockName}} </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="stockLastPrice">
+          <th mat-header-cell *matHeaderCellDef> Last Price </th>
+          <td mat-cell *matCellDef="let element"> {{element.stockLastPrice}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>   
+      
+      
+      
+

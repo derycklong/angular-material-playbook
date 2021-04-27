@@ -10,7 +10,7 @@ import { stringify } from "@angular/compiler/src/util";
 })
 
 export class PortfolioService {
-    private portfolioUrl = 'https://api.jsonbin.io/b/6087cfc6f6655022c46d0044'
+    private portfolioUrl = 'https://raw.githubusercontent.com/derycklong/angular-material-playbook/main/src/app/api/portfolio.json'
 
     constructor(private http:HttpClient){}
   
