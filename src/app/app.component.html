@@ -1,0 +1,26 @@
+<mat-sidenav-container fullscreen>
+	<mat-sidenav #exampleSidenav class="example-sidenav" [mode]="isMobile ? 'over' : 'side'">
+    <mat-toolbar>
+      Links
+      <span fxFlex></span>
+      <button mat-icon-button (click)="exampleSidenav.close()"><mat-icon>keyboard_arrow_left</mat-icon></button>
+    </mat-toolbar>
+    <mat-nav-list style="z-index: 2">
+			<a mat-list-item routerLink="/portfolio" routerLinkActive="active-link" (click)="exampleSidenav.close()">View Holdings</a>
+			<a mat-list-item routerLink="/about" routerLinkActive="active-link" (click)="exampleSidenav.close()">Add Transaction</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-toolbar color="primary">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="exampleSidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>My Application</span>
+  </mat-toolbar>
+
+  <div class="app-content">
+    <router-outlet></router-outlet>
+  </div>
+
+</mat-sidenav-container>
+

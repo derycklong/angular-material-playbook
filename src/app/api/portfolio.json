@@ -1,0 +1,21 @@
+[
+    {
+        "portfolioId": 1,
+        "symbol": "NIO",
+        "stockName": "Nio",
+        "stockLastPrice": "41.20"
+    },
+    {
+        "portfolioId": 2,
+        "symbol": "TSLA",
+        "stockName": "Tesla",
+        "stockLastPrice": "722.10"
+    },
+    {
+        "portfolioId": 3,
+        "symbol": "PLTR",
+        "stockName": "Palantir Technologies",
+        "stockLastPrice": "23.12"
+    }
+ 
+  ]
