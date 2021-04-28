@@ -1,26 +1,33 @@
-import { Component, OnInit } from '@angular/core'
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core'
 import { PortfolioService } from '../controller/portfolio.service';
-import { IPortfolio } from '../model/portfolio'
+
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
     templateUrl:'./portfolio.component.html',
     styleUrls:['./portfolio.component.css']
 })
 
-export class PortfolioComponent implements OnInit{
+export class PortfolioComponent implements OnInit, AfterViewInit{
     dataSource
-
-    constructor(private portService:PortfolioService){}
+    displayedColumns: string[] = ['portfolioId', 'symbol', 'stockName', 'stockLastPrice'];
+    @ViewChild(MatPaginator) paginator:MatPaginator
+    
+    constructor(private portService:PortfolioService){
+        this.dataSource = new MatTableDataSource([])
+        this.portService.getPortfolio().subscribe(res => {
+            this.dataSource.data = res
+        })
+    }
 
     ngOnInit(){
-        
-        this.portService.getPortfolio().subscribe(data => {
-            this.dataSource = new MatTableDataSource(data);
-        
-        })
 
     }
-    displayedColumns: string[] = ['portfolioId', 'symbol', 'stockName', 'stockLastPrice'];
+
+    ngAfterViewInit(){
+        this.dataSource.paginator = this.paginator
+    }
+    
 
 }

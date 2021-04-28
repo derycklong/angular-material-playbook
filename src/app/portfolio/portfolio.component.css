@@ -10,3 +10,8 @@ table {
     flex: none;
     width: 70px;
 }
+
+.mat-column-stockName {
+    flex: none;
+    width: 70%;
+}

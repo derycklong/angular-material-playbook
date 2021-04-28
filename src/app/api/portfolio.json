@@ -16,6 +16,30 @@
         "symbol": "PLTR",
         "stockName": "Palantir Technologies",
         "stockLastPrice": "23.12"
+    },
+    {
+        "portfolioId": 4,
+        "symbol": "GOEV",
+        "stockName": "Canoo",
+        "stockLastPrice": "8.99"
+    },
+    {
+        "portfolioId": 5,
+        "symbol": "ABNB",
+        "stockName": "AirBnb",
+        "stockLastPrice": "170.56"
+    },
+    {
+        "portfolioId": 6,
+        "symbol": "SPLK",
+        "stockName": "Splunk Technologies",
+        "stockLastPrice": "134.67"
+    },
+    {
+        "portfolioId": 7,
+        "symbol": "BABA",
+        "stockName": "Alibaba",
+        "stockLastPrice": "236.78"
     }
  
   ]
