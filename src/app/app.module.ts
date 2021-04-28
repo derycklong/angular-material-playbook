@@ -5,10 +5,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module'
-import { MatTableModule } from '@angular/material/table'  
 import { RouterModule } from '@angular/router'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { WelcomeComponent } from './welcome/welcome.component'
 import { PortfolioComponent } from './portfolio/portfolio.component'
+import { CreatePorfolioComponent } from './portfolio/create-portfolio/create-portfolio.component';
 
 
 
@@ -17,14 +18,16 @@ import { PortfolioComponent } from './portfolio/portfolio.component'
   declarations: [
     AppComponent,
     WelcomeComponent,
-    PortfolioComponent
+    PortfolioComponent,
+    CreatePorfolioComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    //MatTableModule,
     MaterialModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
       { path:'welcome',component: WelcomeComponent },
       { path:'portfolio',component: PortfolioComponent },

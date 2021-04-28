@@ -1,0 +1,27 @@
+<div class="col-md-5">
+    <h3>Create a new Entry</h3>
+    <form [formGroup]="formGroup" (ngSubmit)="saveEntry(formGroup.value)" autocomplete="off">
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Symbol" value="" formControlName="symbol">
+        <mat-error *ngIf="!formGroup.controls['symbol'].valid && formGroup.controls['symbol'].touched">
+            Please enter symbol
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Stock Name" value="" formControlName="stockname">
+        <mat-error *ngIf="!formGroup.controls['stockname'].valid && formGroup.controls['stockname'].touched">
+            Please enter stockname
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Last Price" value="" formControlName="lastprice">
+        <mat-error *ngIf="!formGroup.controls['lastprice'].valid && formGroup.controls['lastprice'].touched">
+            {{getErrorNaN()}}
+        </mat-error>
+      </mat-form-field>
+      
+      <button color="primary" mat-raised-button type="submit" [disabled]="!formGroup.valid">Submit</button>
+      
+      
+    </form>
+  </div>

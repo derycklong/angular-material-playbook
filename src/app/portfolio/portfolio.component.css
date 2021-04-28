@@ -1,6 +1,14 @@
 table {
     width: 100%;
 }
+th.mat-sort-header-sorted {
+    color: black;
+  }
+
+.form-element {
+    padding: 5px 0px 10px 2px;
+    width: 100%;
+}
 .mat-column-portfolioId {
     flex: none;
     width: 70px;
