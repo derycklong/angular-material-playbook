@@ -10,6 +10,7 @@
         <mat-form-field>
           <input matInput [formControl]="stockNameFilter" (keyup)="applyStockNameFilter($event.target.value)" placeholder="Stock Name Filter">
         </mat-form-field>
+        
       </div>
     </div>
   </div>
@@ -20,6 +21,9 @@
       </div>
       <div class="col-md-1" *ngIf="this.selection.selected.length > 0">
         <button mat-raised-button (click)="removeSelectedRows()">Delete {{this.selection.selected.length}} of {{this.dataSource.data.length}} items</button>
+      </div>
+      <div class="col-md-1">
+        <button mat-raised-button (click)="clear()">Clear Selection</button>
       </div>
     </div>
   </div>

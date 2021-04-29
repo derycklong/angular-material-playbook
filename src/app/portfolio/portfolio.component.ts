@@ -69,7 +69,7 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
           /** Selects all rows if they are not all selected; otherwise clear selection. */
     masterToggle() {
         this.isSelected() ?
-            this.selection.clear() :
+            this.selection.clear() : 
             this.dataSource.connect().value.forEach(row => this.selection.select(row));
     }
 
@@ -84,18 +84,15 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
     }
 
     removeSelectedRows() {
-    this.selection.selected.forEach(item => {
-        const index = this.dataSource.data.findIndex(inc => inc === item );
-        console.log(index)
-        this.dataSource.data.splice(index,1)
-    });
-    //this.dataSource._updateChangeSubscription()
-    console.log(this.isAllSelected())
-    this.dataSource.paginator = this.paginator
-    this.selection.clear()
-    this.dataSource._updateChangeSubscription()
+        this.selection.selected.forEach(item => {
+            const index = this.dataSource.data.findIndex(inc => inc === item );
+            console.log(index)
+            this.dataSource.data.splice(index,1)
+        });
+        //this.dataSource._updateChangeSubscription()
+        console.log(this.isAllSelected())
+        this.dataSource.paginator = this.paginator
 
-    
     
     }
 
@@ -152,6 +149,12 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
             //this.dataSource.data = this.dataSource.data.slice()
           });
         //return dialogRef.afterClosed();
+    }
+
+    clear(){
+        this.selection.clear()
+        console.log(this.isAllSelected())
+        
     }
 
     
