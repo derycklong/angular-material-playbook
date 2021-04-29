@@ -88,13 +88,12 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
         const index = this.dataSource.data.findIndex(inc => inc === item );
         console.log(index)
         this.dataSource.data.splice(index,1)
-        this.dataSource = new MatTableDataSource<Element>(this.dataSource.data);
-        
-        //this.paginator.pageIndex = 0
     });
     //this.dataSource._updateChangeSubscription()
+    console.log(this.isAllSelected())
     this.dataSource.paginator = this.paginator
-    this.selection = new SelectionModel(true, []);
+    this.selection.clear()
+    this.dataSource._updateChangeSubscription()
 
     
     
@@ -115,7 +114,7 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
                 const index = this.dataSource.data.findIndex(res => res.portfolioId === result.element.portfolioId)
                 if (index !== -1){
                     this.dataSource.data.splice(index,1)
-                    this.selection = new SelectionModel(true, []);
+                    this.selection.clear()
                     this.dataSource._updateChangeSubscription()
                 }
             }
