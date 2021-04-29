@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { WelcomeComponent } from './welcome/welcome.component'
 import { PortfolioComponent } from './portfolio/portfolio.component'
 import { CreatePorfolioComponent } from './portfolio/create-portfolio/create-portfolio.component';
+import { DeletePortfolioComponent } from './portfolio/delete-portfolio/delete-portfolio.component';
 
 
 
@@ -19,7 +20,8 @@ import { CreatePorfolioComponent } from './portfolio/create-portfolio/create-por
     AppComponent,
     WelcomeComponent,
     PortfolioComponent,
-    CreatePorfolioComponent
+    CreatePorfolioComponent,
+    DeletePortfolioComponent
   ],
   imports: [
     BrowserModule,

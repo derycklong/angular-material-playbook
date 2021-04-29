@@ -1,5 +1,5 @@
 <div class="col-md-5">
-    <h3>Create a new Entry</h3>
+    <h3>{{this.titleName}}</h3>
     <form [formGroup]="formGroup" (ngSubmit)="saveEntry(formGroup.value)" autocomplete="off">
       <mat-form-field class="form-element">
         <input matInput placeholder="Symbol" value="" formControlName="symbol">
@@ -20,7 +20,7 @@
         </mat-error>
       </mat-form-field>
       
-      <button color="primary" mat-raised-button type="submit" [disabled]="!formGroup.valid">Submit</button>
+      <button color="primary" mat-raised-button type="submit" [disabled]="!formGroup.valid">{{this.buttonName}}</button>
       
       
     </form>

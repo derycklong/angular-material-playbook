@@ -21,5 +21,10 @@ th.mat-sort-header-sorted {
 
 .mat-column-stockName {
     flex: none;
-    width: 70%;
+    width: 50%;
+}
+
+.mat-column-select {
+    flex: none;
+    width: 70px;
 }
