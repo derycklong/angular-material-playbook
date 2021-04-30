@@ -14,10 +14,16 @@ export class PortfolioService {
 
     constructor(private http:HttpClient){}
   
-    getPortfolio():Observable<IPortfolio[]>{
+    getPortfolios():Observable<IPortfolio[]>{
       return this.http.get<IPortfolio[]>(this.portfolioUrl).pipe(
         tap(data => console.log('All', JSON.stringify(data))),
         catchError(this.handleError)
+      )
+    }
+
+    getPorfolio(id):Observable<IPortfolio>{
+      return this.getPortfolios().pipe(
+        map(portfolios => portfolios.find(p => p.portfolioId === id))
       )
     }
 

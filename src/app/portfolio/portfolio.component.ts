@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core'
+import { AfterViewInit, Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core'
 import { PortfolioService } from '../controller/portfolio.service';
 
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 import { CreatePorfolioComponent } from './create-portfolio/create-portfolio.component';
 import { IPortfolio } from '../model/portfolio'
 import { DeletePortfolioComponent } from './delete-portfolio/delete-portfolio.component';
@@ -30,24 +30,45 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
     @ViewChild(MatSort) sort: MatSort
     symbolFilter = new FormControl()
     stockNameFilter = new FormControl()
+    minPriceFilter = new FormControl()
+    maxPriceFilter = new FormControl()
 
-    filteredValues = { symbol:'', stockname:''}
+    filteredValues = { symbol:'', stockname:'',minprice:'',maxprice:''}
     
     constructor(private portService:PortfolioService, public dialog:MatDialog ){
     }
 
     ngOnInit(){
         this.dataSource = new MatTableDataSource([])
-        this.portService.getPortfolio().subscribe(res => {
+        this.portService.getPortfolios().subscribe(res => {
             console.log('do hit here please')
             this.dataSource.data = res
         })
         this.dataSource.filterPredicate = function(data, filter): boolean {
+            console.log('data')
             console.log(filter)
+            var maxPrice:number
+            var minPrice:number
+
+            if (JSON.parse(filter).maxprice == ""){
+                maxPrice = Infinity  
+            }
+            else{
+                maxPrice=+JSON.parse(filter).maxprice
+            }
+
+            if (JSON.parse(filter).minprice == ""){
+                minPrice = 0  
+            }
+            else{
+                minPrice=+JSON.parse(filter).minprice
+            }
             
             return data.symbol.toLowerCase().includes(JSON.parse(filter).symbol) && 
-            data.stockName.toLowerCase().includes(JSON.parse(filter).stockname);
-          };
+            data.stockName.toLowerCase().includes(JSON.parse(filter).stockname) &&
+            (data.stockLastPrice >= minPrice &&
+            data.stockLastPrice <= maxPrice)
+        }
     }
 
     ngAfterViewInit(){
@@ -66,11 +87,33 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
         console.log(JSON.parse(this.dataSource.filter).stockname)
     }
 
+    applyMinPriceFilter(min){
+        if (min != "")  
+            this.filteredValues['minprice'] = min
+        else 
+            this.filteredValues['minprice'] = ""
+        this.dataSource.filter = JSON.stringify(this.filteredValues)
+        console.log(JSON.parse(this.dataSource.filter).minprice)
+
+    }
+
+    applyMaxPriceFilter(max){
+        if ( max != "")  
+            this.filteredValues['maxprice'] = max
+        else
+            this.filteredValues['maxprice'] = ""
+        this.dataSource.filter = JSON.stringify(this.filteredValues)
+        console.log(JSON.parse(this.dataSource.filter).maxprice)
+    }
+
+
+
           /** Selects all rows if they are not all selected; otherwise clear selection. */
     masterToggle() {
         this.isSelected() ?
             this.selection.clear() : 
             this.dataSource.connect().value.forEach(row => this.selection.select(row));
+            //this.dataSource.filteredData.forEach(row => this.selection.select(row));
     }
 
     isAllSelected() {
@@ -152,7 +195,8 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
     }
 
     clear(){
-        this.selection.clear()
+        //this.selection.clear()
+        this.masterToggle()
         console.log(this.isAllSelected())
         
     }

@@ -1,0 +1,29 @@
+<div class="container-md p-3 my-3" *ngIf="portfolio">
+    this should contain the detail information of each ticker 
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">{{portfolio.stockName}}</h1>    
+            <div class="card-subtitle mb-2 text-muted">{{portfolio.symbol}}</div>
+        </div>    
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <div>Stock Name:</div>
+                    <div>Symbol:</div>
+                    <div>Last Price:</div>
+                    <div>Average Price:</div>
+                    <div>Quantity:</div>
+                </div>
+                <div class="col-md-2">
+                    <div>{{portfolio.stockName}}</div>
+                    <div>{{portfolio.symbol}}</div>
+                    <div>{{portfolio.stockLastPrice}}</div>
+                    <div></div>
+                    <div></div>
+                </div>
+                 
+            </div>
+        </div>
+    </div>
+</div>
+

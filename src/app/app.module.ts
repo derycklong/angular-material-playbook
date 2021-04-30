@@ -11,6 +11,9 @@ import { WelcomeComponent } from './welcome/welcome.component'
 import { PortfolioComponent } from './portfolio/portfolio.component'
 import { CreatePorfolioComponent } from './portfolio/create-portfolio/create-portfolio.component';
 import { DeletePortfolioComponent } from './portfolio/delete-portfolio/delete-portfolio.component';
+import { ViewDetailPortfolioComponent } from './portfolio/view-detail-portfolio/view-detail-portfolio.component';
+import { DetailPortfolioComponent } from './portfolio/detail-portfolio/detail-portfolio.component';
+import { ViewTransactionComponent } from './transaction/view-transaction/view-transaction.component';
 
 
 
@@ -21,7 +24,10 @@ import { DeletePortfolioComponent } from './portfolio/delete-portfolio/delete-po
     WelcomeComponent,
     PortfolioComponent,
     CreatePorfolioComponent,
-    DeletePortfolioComponent
+    DeletePortfolioComponent,
+    ViewDetailPortfolioComponent,
+    DetailPortfolioComponent,
+    ViewTransactionComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +39,7 @@ import { DeletePortfolioComponent } from './portfolio/delete-portfolio/delete-po
     RouterModule.forRoot([
       { path:'welcome',component: WelcomeComponent },
       { path:'portfolio',component: PortfolioComponent },
+      { path:'viewDetailPortfolio/:id', component: ViewDetailPortfolioComponent},
       { path:'', redirectTo:'welcome', pathMatch:'full'}
     ])
   ],
