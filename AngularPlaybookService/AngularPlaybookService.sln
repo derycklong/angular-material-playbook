@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularPlaybookService", "AngularPlaybookService\AngularPlaybookService.csproj", "{84650949-5DE7-4D61-A2BF-466E4BD6C18B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularPlaybookDataAccess", "AngularPlaybookDataAccess\AngularPlaybookDataAccess.csproj", "{F9B291EB-9471-481A-9935-7D0990DA9F65}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84650949-5DE7-4D61-A2BF-466E4BD6C18B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84650949-5DE7-4D61-A2BF-466E4BD6C18B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84650949-5DE7-4D61-A2BF-466E4BD6C18B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84650949-5DE7-4D61-A2BF-466E4BD6C18B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9B291EB-9471-481A-9935-7D0990DA9F65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9B291EB-9471-481A-9935-7D0990DA9F65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9B291EB-9471-481A-9935-7D0990DA9F65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9B291EB-9471-481A-9935-7D0990DA9F65}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E31E29D7-71CB-4D40-8371-42731A67F491}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,10 @@
+C:\Users\steins_gate\source\repos\AngularPlaybookService\AngularPlaybookDataAccess\bin\Debug\AngularPlaybookDataAccess.dll.config
+C:\Users\steins_gate\source\repos\AngularPlaybookService\AngularPlaybookDataAccess\bin\Debug\AngularPlaybookDataAccess.dll
+C:\Users\steins_gate\source\repos\AngularPlaybookService\AngularPlaybookDataAccess\bin\Debug\AngularPlaybookDataAccess.pdb
+C:\Users\steins_gate\source\repos\AngularPlaybookService\AngularPlaybookDataAccess\bin\Debug\EntityFramework.dll
+C:\Users\steins_gate\source\repos\AngularPlaybookService\AngularPlaybookDataAccess\bin\Debug\EntityFramework.xml
+C:\Users\steins_gate\source\repos\AngularPlaybookService\AngularPlaybookDataAccess\obj\Debug\AngularPlaybookDataAccess.csprojAssemblyReference.cache
+C:\Users\steins_gate\source\repos\AngularPlaybookService\AngularPlaybookDataAccess\obj\Debug\AngularPlaybookDataAccess.csproj.CoreCompileInputs.cache
+C:\Users\steins_gate\source\repos\AngularPlaybookService\AngularPlaybookDataAccess\obj\Debug\AngularPlaybookDataAccess.csproj.CopyComplete
+C:\Users\steins_gate\source\repos\AngularPlaybookService\AngularPlaybookDataAccess\obj\Debug\AngularPlaybookDataAccess.dll
+C:\Users\steins_gate\source\repos\AngularPlaybookService\AngularPlaybookDataAccess\obj\Debug\AngularPlaybookDataAccess.pdb

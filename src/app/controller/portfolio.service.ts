@@ -1,6 +1,6 @@
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, throwError } from "rxjs";
+import { Observable, of, throwError } from "rxjs";
 import { IPortfolio } from '../model/portfolio'
 import { catchError, tap, map} from 'rxjs/operators'
 import { stringify } from "@angular/compiler/src/util";
@@ -10,7 +10,9 @@ import { stringify } from "@angular/compiler/src/util";
 })
 
 export class PortfolioService {
-    private portfolioUrl = 'https://raw.githubusercontent.com/derycklong/angular-material-playbook/main/src/app/api/portfolio.json'
+    //private portfolioUrl = 'https://raw.githubusercontent.com/derycklong/angular-material-playbook/main/src/app/api/portfolio.json'
+
+    private portfolioUrl = 'https://localhost:44374/api/portfolio'
 
     constructor(private http:HttpClient){}
   
@@ -27,19 +29,18 @@ export class PortfolioService {
       )
     }
 
-    private handleError(err: HttpErrorResponse): Observable<never> {
-        // in a real world app, we may send the server to some remote logging infrastructure
-        // instead of just logging it to the console
-        let errorMessage = '';
-        if (err.error instanceof ErrorEvent) {
-          // A client-side or network error occurred. Handle it accordingly.
-          errorMessage = `An error occurred: ${err.error.message}`;
-        } else {
-          // The backend returned an unsuccessful response code.
-          // The response body may contain clues as to what went wrong,
-          errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
-        }
-        console.error(errorMessage);
-        return throwError(errorMessage);
+    savePortfolio(portfolio){
+      let options = { headers: new HttpHeaders({'content-type':'application/json'},
+                                                )}
+      return this.http.post<IPortfolio>(this.portfolioUrl,portfolio,options)
+        .pipe(catchError(this.handleError<IPortfolio>('savePortfolio')))
+    }
+
+    private handleError<T> (operation = 'operation', result?:T) { //handle error (can be copied), can add more code to deal if you want to log error in database .etc
+      return (error:any):Observable<T> => {
+        console.error(error)
+        console.log('hi')
+        return of(result as T)
       }
+    }
 }

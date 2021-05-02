@@ -12,6 +12,7 @@ import { DeletePortfolioComponent } from './delete-portfolio/delete-portfolio.co
 
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormControl } from '@angular/forms';
+import { ThrowStmt } from '@angular/compiler';
 
 
 
@@ -107,16 +108,15 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
     }
 
 
-
-          /** Selects all rows if they are not all selected; otherwise clear selection. */
-    masterToggle() {
+    /** Selects all rows if they are not all selected; otherwise clear selection. */
+    masterToggle(){
         this.isSelected() ?
             this.selection.clear() : 
             this.dataSource.connect().value.forEach(row => this.selection.select(row));
             //this.dataSource.filteredData.forEach(row => this.selection.select(row));
     }
 
-    isAllSelected() {
+    isAllSelected(){
         const numSelected = this.selection.selected.length;
         const numRows = this.dataSource.data.length;
         return numSelected === numRows;
@@ -135,8 +135,6 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
         //this.dataSource._updateChangeSubscription()
         console.log(this.isAllSelected())
         this.dataSource.paginator = this.paginator
-
-    
     }
 
 
@@ -148,7 +146,7 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
 
         dialogRef.afterClosed().subscribe(result => {
             if (result === undefined){
-                //just to prevent error when closing the modal dialog without any action
+            //just to prevent error when closing the modal dialog without any action
             }
             else{
                 const index = this.dataSource.data.findIndex(res => res.portfolioId === result.element.portfolioId)
@@ -158,7 +156,6 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
                     this.dataSource._updateChangeSubscription()
                 }
             }
-
         })
     }
 
@@ -172,13 +169,23 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
                 //just to prevent error when closing the modal dialog without any action
             }
             else if (result.action === "add"){
-                this.dataSource.data.push(result.data)
-                console.log('Add object')
-                console.log(result.data)
-                this.dataSource._updateChangeSubscription();
-            }
+                //this.dataSource.data.push(result.data)
+                this.portService.savePortfolio(result.data).subscribe(results => {
+                    console.log('Add object')
+                    console.log(result.data)
 
-            else if (result.action === "update") {
+                    this.portService.getPortfolios().subscribe(res => {
+                        console.log('do hit here please')
+                        this.dataSource.data = res
+                    })
+                    
+                    //this.dataSource._updateChangeSubscription();
+                })
+
+
+
+            }
+            else if (result.action === "update"){
                 const index = this.dataSource.data.findIndex(res => res.portfolioId === result.data.portfolioId);
                 if (index !== -1) {
                   this.dataSource.data[index] = result.data;

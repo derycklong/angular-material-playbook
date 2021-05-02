@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AngularPlaybookModelStoreContainer" CdmEntityContainer="AngularPlaybookEntities1">
+    <EntitySetMapping Name="Portfolios">
+      <EntityTypeMapping TypeName="AngularPlaybookModel.Portfolio">
+        <MappingFragment StoreEntitySet="Portfolios">
+          <ScalarProperty Name="PortfolioId" ColumnName="PortfolioId" />
+          <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+          <ScalarProperty Name="StockName" ColumnName="StockName" />
+          <ScalarProperty Name="StockLastPrice" ColumnName="StockLastPrice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

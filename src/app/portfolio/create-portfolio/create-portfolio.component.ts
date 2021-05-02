@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { PortfolioService } from 'src/app/controller/portfolio.service';
 import { IPortfolio } from '../../model/portfolio'
 
 export interface DialogData {
@@ -24,6 +25,7 @@ export class CreatePorfolioComponent implements OnInit{
 
     constructor(private formBuilder:FormBuilder,
                 private dialogRef: MatDialogRef<CreatePorfolioComponent>,
+                private portService:PortfolioService,
                 @Inject(MAT_DIALOG_DATA) public data: DialogData
                 ){}
 
@@ -65,6 +67,8 @@ export class CreatePorfolioComponent implements OnInit{
             stockName: newEntry.stockname,
             stockLastPrice : newEntry.lastprice
         }
+
+        
         //console.log(newEntry)
         console.log('pass into dialog compomemt before saving')
         console.log(this.data)
