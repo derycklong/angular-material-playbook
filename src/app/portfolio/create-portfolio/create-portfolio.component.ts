@@ -21,8 +21,7 @@ export class CreatePorfolioComponent implements OnInit{
     formGroup:FormGroup
     buttonName:string
     titleName:string
-
-
+    
     constructor(private formBuilder:FormBuilder,
                 private dialogRef: MatDialogRef<CreatePorfolioComponent>,
                 private portService:PortfolioService,
@@ -33,15 +32,13 @@ export class CreatePorfolioComponent implements OnInit{
         this.createForm()
         this.composeAction()
     }
-
     createForm() {
         this.formGroup = this.formBuilder.group({
                 'symbol': [null, [Validators.required]],
                 'stockname': [null, [Validators.required]],
-                'lastprice': [null, [Validators.required,this.checkNaN]]
+                'lastprice': [null, [Validators.required]]
         });
         
-
         if (this.data.action === "update") {
             this.formGroup.controls['symbol'].setValue(this.data.element.symbol)
             this.formGroup.controls['stockname'].setValue(this.data.element.stockName)
@@ -53,26 +50,22 @@ export class CreatePorfolioComponent implements OnInit{
     }
 
     saveEntry(newEntry){
-        let portfolioid
-        if (this.data.action === "add"){
-            portfolioid = this.data.portfolio.slice(-1)[0].portfolioId+ 1
-        }
-        else if (this.data.action === "update" || "delete"){
-            portfolioid = this.data.element.portfolioId
-        }
-
+        // if (this.data.action === "add"){
+        //     portfolioid = this.data.portfolio.slice(-1)[0].portfolioId+ 1
+        // }
+        // else if (this.data.action === "update" || "delete"){
+        //     portfolioid = this.data.element.portfolioId
+        // }
         let portfolio:IPortfolio = {
-            portfolioId: portfolioid,
+            portfolioId: 0,
             symbol: newEntry.symbol,
             stockName: newEntry.stockname,
             stockLastPrice : newEntry.lastprice
         }
-
-        
         //console.log(newEntry)
         console.log('pass into dialog compomemt before saving')
         console.log(this.data)
-        console.log(portfolio)
+        console.log(portfolio.stockLastPrice)
         
         this.dialogRef.close({data : portfolio, action: this.data.action})
         //this.dataSource.data.push(portfolio)

@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\steins_gate\source\repos\AngularPlaybookService\AngularPlaybookDataAccess\AngularPlaybookModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\CIUSER\Documents\Derek\tutorial\angular-material-playbook\AngularPlaybookService\AngularPlaybookDataAccess\AngularPlaybookModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

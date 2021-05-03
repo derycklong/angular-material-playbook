@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,8 +14,8 @@ import { DeletePortfolioComponent } from './portfolio/delete-portfolio/delete-po
 import { ViewDetailPortfolioComponent } from './portfolio/view-detail-portfolio/view-detail-portfolio.component';
 import { DetailPortfolioComponent } from './portfolio/detail-portfolio/detail-portfolio.component';
 import { ViewTransactionComponent } from './transaction/view-transaction/view-transaction.component';
-
-
+import { LoadingInterceptor } from './shared/loading-interceptor.service';
+import { Error404Component } from './shared/error/error404.component';
 
 
 @NgModule({
@@ -27,7 +27,8 @@ import { ViewTransactionComponent } from './transaction/view-transaction/view-tr
     DeletePortfolioComponent,
     ViewDetailPortfolioComponent,
     DetailPortfolioComponent,
-    ViewTransactionComponent
+    ViewTransactionComponent,
+    Error404Component
   ],
   imports: [
     BrowserModule,
@@ -37,13 +38,15 @@ import { ViewTransactionComponent } from './transaction/view-transaction/view-tr
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
+      { path:'',component: WelcomeComponent },
       { path:'welcome',component: WelcomeComponent },
       { path:'portfolio',component: PortfolioComponent },
       { path:'viewDetailPortfolio/:id', component: ViewDetailPortfolioComponent},
-      { path:'', redirectTo:'welcome', pathMatch:'full'}
+      { path:'error404',component:Error404Component},
+      { path:'**', redirectTo:'welcome', pathMatch:'full'}
     ])
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

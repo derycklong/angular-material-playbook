@@ -6,6 +6,7 @@
 //    Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using System.ComponentModel.DataAnnotations;
 
 namespace AngularPlaybookDataAccess
 {
@@ -17,6 +18,7 @@ namespace AngularPlaybookDataAccess
         public int PortfolioId { get; set; }
         public string Symbol { get; set; }
         public string StockName { get; set; }
-        public decimal StockLastPrice { get; set; }
+        [Required,Range(typeof(decimal), "1", "79228162514264337593543950335")]
+        public decimal? StockLastPrice { get; set; }
     }
 }

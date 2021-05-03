@@ -46,3 +46,23 @@ th.mat-sort-header-sorted {
   .example-headers-align .mat-form-field + .mat-form-field {
     margin-left: 30px;
   }
+
+  .loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .spinner {
+    position: absolute;
+    top: 100px;
+    left: 10px;
+    margin-top: -20px;
+    margin-left: -25px;
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    font-size: 10px;
+  }

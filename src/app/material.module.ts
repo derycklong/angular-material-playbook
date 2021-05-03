@@ -91,7 +91,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         MatTableModule,
         MatSortModule,
         MatPaginatorModule,
-        MatExpansionModule
+        MatExpansionModule,
+        MatSnackBarModule,
+        MatProgressSpinnerModule,
+        MatProgressBarModule
     ],
     providers: [
         MatDatepickerModule,

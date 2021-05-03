@@ -1,7 +1,13 @@
+<ng-container *ngIf="loadingService.isLoading$ | async">
+  <div class="loading">
+    <div class="spinner">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+  </div>
+  
+</ng-container>
+
 <div class="container p-3 my-3">
-
-
-
   <div class="container-md p-2 my-2">
     <div class="row">
       <div class="col-md-1">

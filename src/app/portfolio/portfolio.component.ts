@@ -13,6 +13,8 @@ import { DeletePortfolioComponent } from './delete-portfolio/delete-portfolio.co
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormControl } from '@angular/forms';
 import { ThrowStmt } from '@angular/compiler';
+import { LoadingService } from '../shared/loading.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 
@@ -36,7 +38,7 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
 
     filteredValues = { symbol:'', stockname:'',minprice:'',maxprice:''}
     
-    constructor(private portService:PortfolioService, public dialog:MatDialog ){
+    constructor(private portService:PortfolioService, public dialog:MatDialog,public loadingService: LoadingService,private _snackBar: MatSnackBar ){
     }
 
     ngOnInit(){
@@ -137,6 +139,10 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
         this.dataSource.paginator = this.paginator
     }
 
+    openSnackBar(message: string, action: string) {
+        this._snackBar.open(message, action);
+    }
+
 
     openDeleteDialog(action,element){
         const dialogRef = this.dialog.open(DeletePortfolioComponent, {
@@ -173,6 +179,7 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
                 this.portService.savePortfolio(result.data).subscribe(results => {
                     console.log('Add object')
                     console.log(result.data)
+                    this.openSnackBar('Succesfully added: ' + result.data.stockName, "Dismiss")
 
                     this.portService.getPortfolios().subscribe(res => {
                         console.log('do hit here please')
@@ -201,12 +208,7 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
         //return dialogRef.afterClosed();
     }
 
-    clear(){
-        //this.selection.clear()
-        this.masterToggle()
-        console.log(this.isAllSelected())
-        
-    }
+
 
     
 

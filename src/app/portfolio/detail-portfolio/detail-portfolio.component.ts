@@ -4,8 +4,6 @@ import { Subscription } from 'rxjs';
 import { PortfolioService } from 'src/app/controller/portfolio.service';
 import {IPortfolio } from '../../model/portfolio'
 
-
-
 @Component({
     selector:'detail-portfolio',
     templateUrl:'./detail-portfolio.component.html'
@@ -22,11 +20,9 @@ export class DetailPortfolioComponent implements OnInit{
         // })
         this.portService.getPorfolio(id).subscribe(p=>{
             this.portfolio = p
-            console.log(this.portfolio)
+            console.log('print port')
+            console.log(this.portfolio.portfolioId)
         })
-        
-    
-
     }
 
 }
