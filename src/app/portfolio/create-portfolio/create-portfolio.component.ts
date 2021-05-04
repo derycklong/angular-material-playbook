@@ -36,7 +36,7 @@ export class CreatePorfolioComponent implements OnInit{
         this.formGroup = this.formBuilder.group({
                 'symbol': [null, [Validators.required]],
                 'stockname': [null, [Validators.required]],
-                'lastprice': [null, [Validators.required]]
+                'lastprice': [null, [Validators.required,this.checkNaN]]
         });
         
         if (this.data.action === "update") {
@@ -57,7 +57,7 @@ export class CreatePorfolioComponent implements OnInit{
         //     portfolioid = this.data.element.portfolioId
         // }
         let portfolio:IPortfolio = {
-            portfolioId: 0,
+            portfolioId: this.data.element.portfolioId,
             symbol: newEntry.symbol,
             stockName: newEntry.stockname,
             stockLastPrice : newEntry.lastprice
@@ -65,7 +65,7 @@ export class CreatePorfolioComponent implements OnInit{
         //console.log(newEntry)
         console.log('pass into dialog compomemt before saving')
         console.log(this.data)
-        console.log(portfolio.stockLastPrice)
+        
         
         this.dialogRef.close({data : portfolio, action: this.data.action})
         //this.dataSource.data.push(portfolio)
@@ -79,7 +79,7 @@ export class CreatePorfolioComponent implements OnInit{
 
     //custom error message
     getErrorNaN() {
-        return this.formGroup.get('lastprice').hasError('required') ? 'Symbol is required' :
+        return this.formGroup.get('lastprice').hasError('required') ? 'Price is required' :
           this.formGroup.get('lastprice').hasError('NaN') ? 'Please enter numbers only' : ''
     }
     

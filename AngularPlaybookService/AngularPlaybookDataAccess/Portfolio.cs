@@ -18,7 +18,7 @@ namespace AngularPlaybookDataAccess
         public int PortfolioId { get; set; }
         public string Symbol { get; set; }
         public string StockName { get; set; }
-        [Required,Range(typeof(decimal), "1", "79228162514264337593543950335")]
-        public decimal? StockLastPrice { get; set; }
+        [Required,Range(0, Double.PositiveInfinity)]
+        public decimal StockLastPrice { get; set; }
     }
 }
