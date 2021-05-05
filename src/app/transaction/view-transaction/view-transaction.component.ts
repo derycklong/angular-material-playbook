@@ -5,6 +5,20 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ThrowStmt } from '@angular/compiler';
+import { CreateTransactionComponent } from '../create-transaction/create-transaction.component';
+import { TickerService } from 'src/app/controller/ticker.service';
+import { ActivatedRoute } from '@angular/router';
+import { ITicker } from 'src/app/model/ticker';
+
+
+export interface transactionDetails{
+    transactionId?: number,
+    symbol: string,
+    stockName: string,
+    purchasePrice?: number,
+    purchaseQuantity?: number,
+    transactionDate? : Date
+}
 
 @Component({
     selector:'view-transaction',
@@ -12,14 +26,32 @@ import { ThrowStmt } from '@angular/compiler';
     styleUrls:['./view-transaction.component.css']
 })
 
+
 export class ViewTransactionComponent implements OnInit, AfterViewInit{
     dataSource
-    displayedColumns: string[] = ['transactionId', 'symbol', 'stockName', 'stockPurchasePrice','stockPurchaseQuantity']
+    portfolioData
+    transaction:transactionDetails
+    portName
+    portId
+    averagePrice
+    displayedColumns: string[] = ['transactionId', 'symbol', 'transactionType', 'stockPurchasePrice','stockPurchaseQuantity']
     paginator: any;
     sort: any;
 
+    constructor(public transactionDialog:MatDialog, private tickerService:TickerService, private route:ActivatedRoute){}
+
     ngOnInit(){
         this.dataSource = new MatTableDataSource([])
+        this.tickerService.getTicker(this.route.snapshot.paramMap.get('id')).subscribe(res => {
+            for (let i=0;i<res.transactions.length;i++){
+                res.transactions[i].stockName = res.stockName
+                res.transactions[i].symbol = res.symbol
+            }
+            console.log(res.transactions)
+            this.dataSource=res.transactions
+            
+        })
+
     }
 
     ngAfterViewInit(){
@@ -28,5 +60,20 @@ export class ViewTransactionComponent implements OnInit, AfterViewInit{
             this.dataSource.sort = this.sort
         
     }
+
+    openDialog(){
+        let ticker:ITicker = {
+            tickerId : this.portfolioData.tickerId,
+            stockName : this.portfolioData.stockName,
+            stockLastPrice: this.portfolioData.stockLastPrice,
+            symbol : this.portfolioData.symbol
+        }
+        const dialogRef = this.transactionDialog.open(CreateTransactionComponent,{
+            width:'250px',
+            data: {data : ticker}
+        })
+    }
+
+    
 
 }

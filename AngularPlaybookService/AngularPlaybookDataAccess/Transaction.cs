@@ -6,19 +6,21 @@
 //    Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using System.ComponentModel.DataAnnotations;
 
 namespace AngularPlaybookDataAccess
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Portfolio
+    public partial class Transaction
     {
-        public int PortfolioId { get; set; }
-        public string Symbol { get; set; }
-        public string StockName { get; set; }
-        [Required,Range(0, Double.PositiveInfinity)]
-        public decimal StockLastPrice { get; set; }
+        public int TransactionId { get; set; }
+        public int TickerId { get; set; }
+        public string TransactionType { get; set; }
+        public decimal TransactionPrice { get; set; }
+        public double TransactionQuantity { get; set; }
+        public Nullable<System.DateTime> TransactionDate { get; set; }
+    
+        public virtual Ticker Ticker { get; set; }
     }
 }

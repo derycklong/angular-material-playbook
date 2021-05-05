@@ -1,15 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="AngularPlaybookModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="Portfolios">
+  <EntityType Name="Tickers">
     <Key>
-      <PropertyRef Name="PortfolioId" />
+      <PropertyRef Name="TickerId" />
     </Key>
-    <Property Name="PortfolioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TickerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Symbol" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="StockName" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="StockLastPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
   </EntityType>
+  <EntityType Name="Transactions">
+    <Key>
+      <PropertyRef Name="TransactionId" />
+    </Key>
+    <Property Name="TransactionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TickerId" Type="int" Nullable="false" />
+    <Property Name="TransactionType" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TransactionPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="TransactionQuantity" Type="float" Nullable="false" />
+    <Property Name="TransactionDate" Type="datetime" />
+  </EntityType>
+  <Association Name="FK__Transacti__Ticke__286302EC">
+    <End Role="Tickers" Type="Self.Tickers" Multiplicity="1" />
+    <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tickers">
+        <PropertyRef Name="TickerId" />
+      </Principal>
+      <Dependent Role="Transactions">
+        <PropertyRef Name="TickerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="AngularPlaybookModelStoreContainer">
-    <EntitySet Name="Portfolios" EntityType="Self.Portfolios" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tickers" EntityType="Self.Tickers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Transacti__Ticke__286302EC" Association="Self.FK__Transacti__Ticke__286302EC">
+      <End Role="Tickers" EntitySet="Tickers" />
+      <End Role="Transactions" EntitySet="Transactions" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

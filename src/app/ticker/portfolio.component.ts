@@ -1,20 +1,20 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core'
-import { PortfolioService } from '../controller/portfolio.service';
+import { TickerService } from '../controller/ticker.service';
 
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { CreatePorfolioComponent } from './create-portfolio/create-portfolio.component';
-import { IPortfolio } from '../model/portfolio'
-import { DeletePortfolioComponent } from './delete-portfolio/delete-portfolio.component';
+import { CreateTickerComponent } from './create-ticker/create-ticker.component';
+import { ITicker } from '../model/ticker'
+import { DeleteTickerComponent } from './delete-ticker/delete-ticker.component';
 
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormControl } from '@angular/forms';
 import { LoadingService } from '../shared/loading.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ThrowStmt } from '@angular/compiler';
+
 
 @Component({
     templateUrl:'./portfolio.component.html',
@@ -23,9 +23,9 @@ import { ThrowStmt } from '@angular/compiler';
 
 export class PortfolioComponent implements OnInit, AfterViewInit{
     dataSource
-    displayedColumns: string[] = ['select','portfolioId', 'symbol', 'stockName', 'stockLastPrice','action']
+    displayedColumns: string[] = ['select','tickerId', 'symbol', 'stockName', 'stockLastPrice','action']
     newId:number
-    portfolio:IPortfolio
+    ticker:ITicker
     selection = new SelectionModel(true, [])
     @ViewChild(MatPaginator) paginator:MatPaginator
     @ViewChild(MatSort) sort: MatSort
@@ -36,16 +36,17 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
 
     filteredValues = { symbol:'', stockname:'',minprice:'',maxprice:''}
     
-    constructor(private portService:PortfolioService, public dialog:MatDialog,public loadingService: LoadingService,private _snackBar: MatSnackBar ){
+    constructor(private tickerService:TickerService, public dialog:MatDialog,public loadingService: LoadingService,private _snackBar: MatSnackBar ){
     }
 
     ngOnInit(){
+        
         this.dataSource = new MatTableDataSource([])
-        this.portService.getPortfolios().subscribe(res => {
+        this.tickerService.getTickers().subscribe(res => {
             console.log('do hit here please')
             this.dataSource.data = res
         })
-        this.dataSource.filterPredicate = function(data, filter): boolean {
+        this.dataSource.filterPredicate = (data, filter): boolean => {
             console.log('data')
             console.log(filter)
             var maxPrice:number
@@ -124,8 +125,8 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
         this.selection.selected.forEach(item => {
             const index = this.dataSource.data.findIndex(inc => inc === item );
             console.log(index)
-            this.portService.deletePortfolio(this.dataSource.data[index].portfolioId).subscribe(()=>{
-                this.portService.getPortfolios().subscribe(res =>{
+            this.tickerService.deleteTicker(this.dataSource.data[index].tickerId).subscribe(()=>{
+                this.tickerService.getTickers().subscribe(res =>{
                     this.dataSource.data = res
                 })
             })
@@ -142,7 +143,7 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
 
 
     openDeleteDialog(action,element){
-        const dialogRef = this.dialog.open(DeletePortfolioComponent, {
+        const dialogRef = this.dialog.open(DeleteTickerComponent, {
             width: '300px',
             data: { action: action, element:element}
         })
@@ -153,17 +154,17 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
             }
             else{
 
-                this.portService.deletePortfolio(result.element.portfolioId).subscribe(res => {
+                this.tickerService.deleteTicker(result.element.tickerId).subscribe(res => {
                     console.log('Delete :')
                     console.log(res)
 
                     this.openSnackBar('Succesfully Deleted: ' + res.StockName, "Dismiss")
 
-                    this.portService.getPortfolios().subscribe(res => {
+                    this.tickerService.getTickers().subscribe(res => {
                         this.dataSource.data = res
                     })
                 })
-                // const index = this.dataSource.data.findIndex(res => res.portfolioId === result.element.portfolioId)
+                // const index = this.dataSource.data.findIndex(res => res.tickerId === result.element.tickerId)
                 // if (index !== -1){
                 //     this.dataSource.data.splice(index,1)
                 //     this.selection.clear()
@@ -174,7 +175,7 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
     }
 
     openDialog(action,element) {
-        const dialogRef = this.dialog.open(CreatePorfolioComponent, {
+        const dialogRef = this.dialog.open(CreateTickerComponent, {
           width: '500px',
           data: { action: action , portfolio: this.dataSource.data , element: element }
         });
@@ -184,12 +185,12 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
             }
             else if (result.action === "add"){
                 //this.dataSource.data.push(result.data)
-                this.portService.savePortfolio(result.data).subscribe(res => {
+                this.tickerService.saveTicker(result.data).subscribe(res => {
                     console.log('Response from GET: ')
                     console.log(res)
                     this.openSnackBar('Succesfully added: ' + res.StockName, "Dismiss")
 
-                    this.portService.getPortfolios().subscribe(res => {
+                    this.tickerService.getTickers().subscribe(res => {
                         this.dataSource.data = res
                     })
                     //this.dataSource._updateChangeSubscription();
@@ -199,16 +200,16 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
                 console.log('Update object')
                 console.log(result.data)
 
-                this.portService.updatePortfolio(result.data).subscribe(res => {
+                this.tickerService.updateTicker(result.data).subscribe(res => {
                     console.log('Response from UPDATE: ')
                     console.log(res)
 
                     this.openSnackBar('Successfully update: ' + res.StockName, "Dismiss")
-                    this.portService.getPortfolios().subscribe(res => {
+                    this.tickerService.getTickers().subscribe(res => {
                         this.dataSource.data = res
                     })
                 })
-                // const index = this.dataSource.data.findIndex(res => res.portfolioId === result.data.portfolioId);
+                // const index = this.dataSource.data.findIndex(res => res.tickerId === result.data.tickerId);
                 // if (index !== -1) {
                 //   this.dataSource.data[index] = result.data;
                 //   this.dataSource.data = this.dataSource.data.slice(0);

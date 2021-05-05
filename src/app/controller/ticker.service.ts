@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders,HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of, throwError } from "rxjs";
-import { IPortfolio } from '../model/portfolio'
+import { ITicker } from '../model/ticker'
 import { catchError, tap, map} from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from "@angular/router";
@@ -10,45 +10,52 @@ import { Router } from "@angular/router";
   providedIn:'root'
 })
 
-export class PortfolioService {
+export class TickerService {
     //private portfolioUrl = 'https://raw.githubusercontent.com/derycklong/angular-material-playbook/main/src/app/api/portfolio.json'
 
-    private portfolioUrl = 'https://localhost:44374/api/portfolio'
+    private tickerApi = 'https://localhost:44374/api/ticker'
 
     constructor(private http:HttpClient,private _snackBar: MatSnackBar, private router:Router){}
 
-    getPortfolios():Observable<IPortfolio[]>{
-      return this.http.get<IPortfolio[]>(this.portfolioUrl).pipe(
+    getTickers(){
+      return this.http.get(this.tickerApi).pipe(
         tap(data => console.log('All', JSON.stringify(data))),
         catchError(this.handleError.bind(this))
       )
     }
 
-    getPorfolio(id):Observable<IPortfolio>{
-      return this.http.get<IPortfolio>(this.portfolioUrl+'/'+id).pipe(
+    getTicker(id){
+      return this.http.get(this.tickerApi+'/'+id).pipe(
         tap(data => console.log('All', JSON.stringify(data))),
         catchError(this.handleError.bind(this))
       )
     }
 
-    savePortfolio(portfolio){
+    saveTicker(portfolio){
       let options = { headers: new HttpHeaders({'content-type':'application/json'},
                     )}
-      return this.http.post<IPortfolio>(this.portfolioUrl,JSON.stringify(portfolio),options)
+      return this.http.post<ITicker>(this.tickerApi,JSON.stringify(portfolio),options)
         .pipe(catchError(this.handleError.bind(this)))
     }
 
-    updatePortfolio(portfolio){
+    updateTicker(portfolio){
       console.log('fire update')
       let options = { headers: new HttpHeaders({ 'content-type': 'application/json'}
       )}
-      return this.http.put<IPortfolio>(this.portfolioUrl,portfolio,options)
+      return this.http.put<ITicker>(this.tickerApi,portfolio,options)
         .pipe(catchError(this.handleError.bind(this)))
     }
 
-    deletePortfolio(id){
-      return this.http.delete(this.portfolioUrl+'/'+id)
+    deleteTicker(id){
+      return this.http.delete(this.tickerApi+'/'+id)
         .pipe(catchError(this.handleError.bind(this)))
+    }
+
+    getAveragePrice(id){
+      return this.http.get(this.tickerApi+'/getAveragePrice?id='+id).pipe(
+        tap(data => console.log('All', JSON.stringify(data))),
+        catchError(this.handleError.bind(this))
+      )
     }
 
     openSnackBar(message: string, action: string) {
@@ -63,8 +70,11 @@ export class PortfolioService {
         const body = error.json() || '';
         const err = JSON.stringify(body);
         errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-      } else {
+      } else if (error.error.Message){
         errMsg = error.error ? `Error code : ${error.status} - ${error.error.Message}` : error.toString();
+      }
+      else{
+        errMsg = error.error ? `Error code : ${error.status} - ${error.message}` : error.toString();
       }
       this.openSnackBar(errMsg,"Dismiss")
       console.error(errMsg);

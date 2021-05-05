@@ -2,9 +2,9 @@
 <Schema Namespace="AngularPlaybookModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="PortfolioList">
     <Key>
-      <PropertyRef Name="PortfolioId" />
+      <PropertyRef Name="tickerId" />
     </Key>
-    <Property Name="PortfolioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tickerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Symbol" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="StockName" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="StockLastPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />

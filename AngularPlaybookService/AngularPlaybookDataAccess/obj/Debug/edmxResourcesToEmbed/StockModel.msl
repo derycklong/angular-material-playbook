@@ -4,7 +4,7 @@
     <EntitySetMapping Name="PortfolioLists">
       <EntityTypeMapping TypeName="AngularPlaybookModel.PortfolioList">
         <MappingFragment StoreEntitySet="PortfolioList">
-          <ScalarProperty Name="PortfolioId" ColumnName="PortfolioId" />
+          <ScalarProperty Name="tickerId" ColumnName="tickerId" />
           <ScalarProperty Name="Symbol" ColumnName="Symbol" />
           <ScalarProperty Name="StockName" ColumnName="StockName" />
           <ScalarProperty Name="StockLastPrice" ColumnName="StockLastPrice" />

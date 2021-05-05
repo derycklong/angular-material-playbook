@@ -1,31 +1,31 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PortfolioService } from 'src/app/controller/portfolio.service';
-import { IPortfolio } from '../../model/portfolio'
+import { TickerService } from 'src/app/controller/ticker.service';
+import { ITicker } from '../../model/ticker'
 
-export interface DialogData {
+export interface PortfolioDialogData {
     action:string
-    portfolio: IPortfolio[]
+    ticker: ITicker[]
     element?
   }
 
 @Component({
-    templateUrl:'./create-portfolio.component.html',
-    styleUrls: ['./create-portfolio.component.css']
+    templateUrl:'./create-ticker.component.html',
+    styleUrls: ['./create-ticker.component.css']
     
 })
 
-export class CreatePorfolioComponent implements OnInit{
+export class CreateTickerComponent implements OnInit{
     dataSource
     formGroup:FormGroup
     buttonName:string
     titleName:string
     
     constructor(private formBuilder:FormBuilder,
-                private dialogRef: MatDialogRef<CreatePorfolioComponent>,
-                private portService:PortfolioService,
-                @Inject(MAT_DIALOG_DATA) public data: DialogData
+                private dialogRef: MatDialogRef<CreateTickerComponent>,
+                private tickerService:TickerService,
+                @Inject(MAT_DIALOG_DATA) public data: PortfolioDialogData
                 ){}
 
     ngOnInit(){
@@ -51,13 +51,13 @@ export class CreatePorfolioComponent implements OnInit{
 
     saveEntry(newEntry){
         // if (this.data.action === "add"){
-        //     portfolioid = this.data.portfolio.slice(-1)[0].portfolioId+ 1
+        //     tickerId = this.data.portfolio.slice(-1)[0].tickerId+ 1
         // }
         // else if (this.data.action === "update" || "delete"){
-        //     portfolioid = this.data.element.portfolioId
+        //     tickerId = this.data.element.tickerId
         // }
-        let portfolio:IPortfolio = {
-            portfolioId: this.data.element.portfolioId,
+        let ticker:ITicker = {
+            tickerId: this.data.element.tickerId,
             symbol: newEntry.symbol,
             stockName: newEntry.stockname,
             stockLastPrice : newEntry.lastprice
@@ -67,7 +67,7 @@ export class CreatePorfolioComponent implements OnInit{
         console.log(this.data)
         
         
-        this.dialogRef.close({data : portfolio, action: this.data.action})
+        this.dialogRef.close({data : ticker, action: this.data.action})
         //this.dataSource.data.push(portfolio)
         //this.dataSource._updateChangeSubscription();
     }

@@ -9,7 +9,7 @@ th.mat-sort-header-sorted {
     padding: 5px 0px 10px 2px;
     width: 100%;
 }
-.mat-column-portfolioId {
+.mat-column-tickerId {
     flex: none;
     width: 70px;
 }

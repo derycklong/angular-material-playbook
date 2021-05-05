@@ -5,47 +5,117 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="AngularPlaybookModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Portfolios">
+        <EntityType Name="Tickers">
           <Key>
-            <PropertyRef Name="PortfolioId" />
+            <PropertyRef Name="TickerId" />
           </Key>
-          <Property Name="PortfolioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TickerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Symbol" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="StockName" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="StockLastPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
+        <EntityType Name="Transactions">
+          <Key>
+            <PropertyRef Name="TransactionId" />
+          </Key>
+          <Property Name="TransactionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TickerId" Type="int" Nullable="false" />
+          <Property Name="TransactionType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TransactionPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TransactionQuantity" Type="float" Nullable="false" />
+          <Property Name="TransactionDate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__Transacti__Ticke__286302EC">
+          <End Role="Tickers" Type="Self.Tickers" Multiplicity="1" />
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tickers">
+              <PropertyRef Name="TickerId" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="TickerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="AngularPlaybookModelStoreContainer">
-          <EntitySet Name="Portfolios" EntityType="Self.Portfolios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tickers" EntityType="Self.Tickers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Transacti__Ticke__286302EC" Association="Self.FK__Transacti__Ticke__286302EC">
+            <End Role="Tickers" EntitySet="Tickers" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AngularPlaybookModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Portfolio">
-          <Key>
-            <PropertyRef Name="PortfolioId" />
-          </Key>
-          <Property Name="PortfolioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Symbol" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="StockName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="StockLastPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-        </EntityType>
         <EntityContainer Name="AngularPlaybookEntities1" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Portfolios" EntityType="Self.Portfolio" />
+          <EntitySet Name="Tickers" EntityType="AngularPlaybookModel.Ticker" />
+          <EntitySet Name="Transactions" EntityType="AngularPlaybookModel.Transaction" />
+          <AssociationSet Name="FK__Transacti__Ticke__286302EC" Association="AngularPlaybookModel.FK__Transacti__Ticke__286302EC">
+            <End Role="Ticker" EntitySet="Tickers" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Ticker">
+          <Key>
+            <PropertyRef Name="TickerId" />
+          </Key>
+          <Property Name="TickerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Symbol" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="StockName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="StockLastPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="Transactions" Relationship="AngularPlaybookModel.FK__Transacti__Ticke__286302EC" FromRole="Ticker" ToRole="Transaction" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="TransactionId" />
+          </Key>
+          <Property Name="TransactionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TickerId" Type="Int32" Nullable="false" />
+          <Property Name="TransactionType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TransactionPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TransactionQuantity" Type="Double" Nullable="false" />
+          <Property Name="TransactionDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Ticker" Relationship="AngularPlaybookModel.FK__Transacti__Ticke__286302EC" FromRole="Transaction" ToRole="Ticker" />
+        </EntityType>
+        <Association Name="FK__Transacti__Ticke__286302EC">
+          <End Type="AngularPlaybookModel.Ticker" Role="Ticker" Multiplicity="1" />
+          <End Type="AngularPlaybookModel.Transaction" Role="Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticker">
+              <PropertyRef Name="TickerId" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="TickerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="AngularPlaybookModelStoreContainer" CdmEntityContainer="AngularPlaybookEntities1">
-          <EntitySetMapping Name="Portfolios">
-            <EntityTypeMapping TypeName="AngularPlaybookModel.Portfolio">
-              <MappingFragment StoreEntitySet="Portfolios">
-                <ScalarProperty Name="PortfolioId" ColumnName="PortfolioId" />
-                <ScalarProperty Name="Symbol" ColumnName="Symbol" />
-                <ScalarProperty Name="StockName" ColumnName="StockName" />
+          <EntitySetMapping Name="Tickers">
+            <EntityTypeMapping TypeName="AngularPlaybookModel.Ticker">
+              <MappingFragment StoreEntitySet="Tickers">
                 <ScalarProperty Name="StockLastPrice" ColumnName="StockLastPrice" />
+                <ScalarProperty Name="StockName" ColumnName="StockName" />
+                <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+                <ScalarProperty Name="TickerId" ColumnName="TickerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="AngularPlaybookModel.Transaction">
+              <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="TransactionQuantity" ColumnName="TransactionQuantity" />
+                <ScalarProperty Name="TransactionPrice" ColumnName="TransactionPrice" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="TickerId" ColumnName="TickerId" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

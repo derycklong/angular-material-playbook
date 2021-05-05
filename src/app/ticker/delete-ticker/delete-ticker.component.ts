@@ -6,13 +6,13 @@ export interface DialogData{
     element:any
 } 
 @Component({
-    templateUrl:'./delete-portfolio.component.html',
-    styleUrls:['./delete-portfolio.component.html']
+    templateUrl:'./delete-ticker.component.html',
+    styleUrls:['./delete-ticker.component.html']
 })
 
-export class DeletePortfolioComponent {
+export class DeleteTickerComponent {
 
-    constructor(private dialogRef:MatDialogRef<DeletePortfolioComponent>, @Inject(MAT_DIALOG_DATA) public data:DialogData){}
+    constructor(private dialogRef:MatDialogRef<DeleteTickerComponent>, @Inject(MAT_DIALOG_DATA) public data:DialogData){}
 
     onDelete(){
         this.dialogRef.close({action: this.data.action, element: this.data.element})

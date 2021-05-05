@@ -1,42 +1,42 @@
 [
     {
-        "portfolioId": 1,
+        "tickerId": 1,
         "symbol": "NIO",
         "stockName": "Nio",
         "stockLastPrice": "41.20"
     },
     {
-        "portfolioId": 2,
+        "tickerId": 2,
         "symbol": "TSLA",
         "stockName": "Tesla",
         "stockLastPrice": "722.10"
     },
     {
-        "portfolioId": 3,
+        "tickerId": 3,
         "symbol": "PLTR",
         "stockName": "Palantir Technologies",
         "stockLastPrice": "23.12"
     },
     {
-        "portfolioId": 4,
+        "tickerId": 4,
         "symbol": "GOEV",
         "stockName": "Canoo",
         "stockLastPrice": "8.99"
     },
     {
-        "portfolioId": 5,
+        "tickerId": 5,
         "symbol": "ABNB",
         "stockName": "AirBnb",
         "stockLastPrice": "170.56"
     },
     {
-        "portfolioId": 6,
+        "tickerId": 6,
         "symbol": "SPLK",
         "stockName": "Splunk Technologies",
         "stockLastPrice": "134.67"
     },
     {
-        "portfolioId": 7,
+        "tickerId": 7,
         "symbol": "BABA",
         "stockName": "Alibaba",
         "stockLastPrice": "236.78"

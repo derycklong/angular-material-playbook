@@ -1,13 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="AngularPlaybookModelStoreContainer" CdmEntityContainer="AngularPlaybookEntities1">
-    <EntitySetMapping Name="Portfolios">
-      <EntityTypeMapping TypeName="AngularPlaybookModel.Portfolio">
-        <MappingFragment StoreEntitySet="Portfolios">
-          <ScalarProperty Name="PortfolioId" ColumnName="PortfolioId" />
-          <ScalarProperty Name="Symbol" ColumnName="Symbol" />
-          <ScalarProperty Name="StockName" ColumnName="StockName" />
+    <EntitySetMapping Name="Tickers">
+      <EntityTypeMapping TypeName="AngularPlaybookModel.Ticker">
+        <MappingFragment StoreEntitySet="Tickers">
           <ScalarProperty Name="StockLastPrice" ColumnName="StockLastPrice" />
+          <ScalarProperty Name="StockName" ColumnName="StockName" />
+          <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+          <ScalarProperty Name="TickerId" ColumnName="TickerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transactions">
+      <EntityTypeMapping TypeName="AngularPlaybookModel.Transaction">
+        <MappingFragment StoreEntitySet="Transactions">
+          <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+          <ScalarProperty Name="TransactionQuantity" ColumnName="TransactionQuantity" />
+          <ScalarProperty Name="TransactionPrice" ColumnName="TransactionPrice" />
+          <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+          <ScalarProperty Name="TickerId" ColumnName="TickerId" />
+          <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

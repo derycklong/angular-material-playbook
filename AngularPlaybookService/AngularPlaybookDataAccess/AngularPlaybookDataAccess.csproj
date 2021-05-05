@@ -63,10 +63,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AngularPlaybookModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Portfolio.cs">
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Ticker.cs">
       <DependentUpon>AngularPlaybookModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transaction.cs">
+      <DependentUpon>AngularPlaybookModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="AngularPlaybookModel.edmx">

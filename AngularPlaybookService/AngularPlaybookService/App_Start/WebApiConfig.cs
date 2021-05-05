@@ -20,8 +20,10 @@ namespace AngularPlaybookService
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            //Remove XML Formatter
-            config.Formatters.Remove(config.Formatters.XmlFormatter);
+
+
+      //Remove XML Formatter
+      config.Formatters.Remove(config.Formatters.XmlFormatter);
             config.Formatters.Add(config.Formatters.JsonFormatter);
             //Neat Indent
             config.Formatters.JsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;

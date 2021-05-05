@@ -1,0 +1,18 @@
+<form [formGroup]="formGroup" autocomplete="off">
+    
+    <mat-form-field class="form-element">
+        <input matInput placeholder="Purchase Price" value="" formControlName="purchaseprice">
+        <mat-error *ngIf=""></mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-element">
+        <input matInput placeholder="Purchase Quantity" value="" formControlName="purchasequantity">
+        <mat-error *ngIf=""></mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-element">
+        <input matInput placeholder="Transaction Date" value="" formControlName="transactiondate">
+        <mat-error *ngIf=""></mat-error>
+    </mat-form-field>
+    <button color="primary" mat-raised-button (click)="add(formGroup.value)">Add</button>    
+</form>
+
+

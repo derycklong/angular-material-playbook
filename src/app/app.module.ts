@@ -8,14 +8,15 @@ import { MaterialModule } from './material.module'
 import { RouterModule } from '@angular/router'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { WelcomeComponent } from './welcome/welcome.component'
-import { PortfolioComponent } from './portfolio/portfolio.component'
-import { CreatePorfolioComponent } from './portfolio/create-portfolio/create-portfolio.component';
-import { DeletePortfolioComponent } from './portfolio/delete-portfolio/delete-portfolio.component';
-import { ViewDetailPortfolioComponent } from './portfolio/view-detail-portfolio/view-detail-portfolio.component';
-import { DetailPortfolioComponent } from './portfolio/detail-portfolio/detail-portfolio.component';
+import { PortfolioComponent } from './ticker/portfolio.component'
+import { CreateTickerComponent } from './ticker/create-ticker/create-ticker.component';
+import { DeleteTickerComponent } from './ticker/delete-ticker/delete-ticker.component';
+import { ViewDetailTickerComponent } from './ticker/view-detail-ticker/view-detail-ticker.component';
+import { DetailTickerComponent } from './ticker/detail-ticker/detail-ticker.component';
 import { ViewTransactionComponent } from './transaction/view-transaction/view-transaction.component';
 import { LoadingInterceptor } from './shared/loading-interceptor.service';
 import { Error404Component } from './shared/error/error404.component';
+import { CreateTransactionComponent } from './transaction/create-transaction/create-transaction.component';
 
 
 @NgModule({
@@ -23,12 +24,13 @@ import { Error404Component } from './shared/error/error404.component';
     AppComponent,
     WelcomeComponent,
     PortfolioComponent,
-    CreatePorfolioComponent,
-    DeletePortfolioComponent,
-    ViewDetailPortfolioComponent,
-    DetailPortfolioComponent,
+    CreateTickerComponent,
+    DeleteTickerComponent,
+    ViewDetailTickerComponent,
+    DetailTickerComponent,
     ViewTransactionComponent,
-    Error404Component
+    Error404Component,
+    CreateTransactionComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,7 @@ import { Error404Component } from './shared/error/error404.component';
       { path:'',component: WelcomeComponent },
       { path:'welcome',component: WelcomeComponent },
       { path:'portfolio',component: PortfolioComponent },
-      { path:'viewDetailPortfolio/:id', component: ViewDetailPortfolioComponent},
+      { path:'viewDetail/:id', component: ViewDetailTickerComponent},
       { path:'error404',component:Error404Component},
       { path:'**', redirectTo:'welcome', pathMatch:'full'}
     ])
