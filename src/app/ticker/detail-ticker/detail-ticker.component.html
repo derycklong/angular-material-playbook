@@ -18,8 +18,9 @@
                     <div>{{ticker.stockName}}</div>
                     <div>{{ticker.symbol}}</div>
                     <div>{{ticker.stockLastPrice | currency:'USD'}}</div>
-                    <div>{{this.averagePrice | currency:'USD'}}</div>
-                    <div></div>
+                    <div *ngIf="this.averagePrice">{{this.averagePrice | currency:'USD'}}</div>
+                    <div *ngIf="!this.averagePrice">No Transaction</div>
+                    <div>{{this.totalQuantity | number}}</div>
                 </div>
                  
             </div>

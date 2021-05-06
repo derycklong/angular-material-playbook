@@ -1,17 +1,35 @@
 <form [formGroup]="formGroup" autocomplete="off">
+
+    <mat-form-field>
+        <input matInput placeholder="Stock Name" value="" formControlName="stockname">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Symbol" value="" formControlName="symbol">
+    </mat-form-field>
+
+    <mat-form-field class="form-element">
+        <mat-select placeholder="TransactionType" formControlName="transactiontype">
+            <mat-option value="buy">Buy</mat-option>
+            <mat-option value="sell">Sell</mat-option>
+        </mat-select>
+    </mat-form-field>
     
     <mat-form-field class="form-element">
-        <input matInput placeholder="Purchase Price" value="" formControlName="purchaseprice">
+        <input matInput placeholder="Purchase Price" value="" formControlName="transactionprice">
         <mat-error *ngIf=""></mat-error>
     </mat-form-field>
     <mat-form-field class="form-element">
-        <input matInput placeholder="Purchase Quantity" value="" formControlName="purchasequantity">
+        <input matInput placeholder="Purchase Quantity" value="" formControlName="transactionquantity">
         <mat-error *ngIf=""></mat-error>
     </mat-form-field>
+
     <mat-form-field class="form-element">
-        <input matInput placeholder="Transaction Date" value="" formControlName="transactiondate">
+        <input matInput [matDatepicker]="picker" placeholder="Transaction Date" formControlName="transactiondate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
         <mat-error *ngIf=""></mat-error>
     </mat-form-field>
+
     <button color="primary" mat-raised-button (click)="add(formGroup.value)">Add</button>    
 </form>
 

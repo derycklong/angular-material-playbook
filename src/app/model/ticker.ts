@@ -9,8 +9,10 @@ export interface ITicker{
 }
 
 export interface ITransaction{
-    purchasePrice:number,
-    purchaseQuantity:number,
-    transactionDate: Date
+    tickerId:number,
+    transactionType:string,
+    transactionPrice:number,
+    transactionQuantity:number,
+    transactionDate: string
 
 }

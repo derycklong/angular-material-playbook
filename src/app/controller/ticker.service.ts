@@ -51,8 +51,8 @@ export class TickerService {
         .pipe(catchError(this.handleError.bind(this)))
     }
 
-    getAveragePrice(id){
-      return this.http.get(this.tickerApi+'/getAveragePrice?id='+id).pipe(
+    getTickerDetails(id){
+      return this.http.get(this.tickerApi+'/getTickerDetails?id='+id).pipe(
         tap(data => console.log('All', JSON.stringify(data))),
         catchError(this.handleError.bind(this))
       )

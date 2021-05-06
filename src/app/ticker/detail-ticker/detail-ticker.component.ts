@@ -10,6 +10,7 @@ import {ITicker } from '../../model/ticker'
 
 export class DetailTickerComponent implements OnInit{
     averagePrice
+    totalQuantity
     ticker:ITicker
     constructor(private route:ActivatedRoute, private tickerService:TickerService){}
     ngOnInit(){
@@ -22,8 +23,9 @@ export class DetailTickerComponent implements OnInit{
             console.log('print port')
             console.log(this.ticker.tickerId)
         })
-        this.tickerService.getAveragePrice(this.route.snapshot.paramMap.get('id')).subscribe(res=>{
-            this.averagePrice=res
+        this.tickerService.getTickerDetails(this.route.snapshot.paramMap.get('id')).subscribe(res=>{
+            this.averagePrice= +res.averagePrice
+            this.totalQuantity= +res.totalQuantity
         })
     }
 

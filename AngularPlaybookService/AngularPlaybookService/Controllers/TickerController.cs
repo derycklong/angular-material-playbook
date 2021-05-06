@@ -12,7 +12,7 @@ namespace AngularPlaybookService.Controllers
 {
   public class TickerController : ApiController
   {
-    [Route("api/Ticker")]
+    //[Route("api/Ticker")]
     public HttpResponseMessage Get()
     {
       AngularPlaybookEntities entities = new AngularPlaybookEntities();
@@ -38,6 +38,7 @@ namespace AngularPlaybookService.Controllers
 
     }
 
+    
     public HttpResponseMessage Get(int id)
     {
       try
@@ -80,6 +81,7 @@ namespace AngularPlaybookService.Controllers
 
     }
 
+    
     public HttpResponseMessage Post([FromBody] Ticker ticker)
     {
       if (!ModelState.IsValid)
@@ -106,6 +108,7 @@ namespace AngularPlaybookService.Controllers
       }
     }
 
+    
     public HttpResponseMessage Put([FromBody] Ticker ticker)
     {
       if (!ModelState.IsValid)
@@ -136,6 +139,7 @@ namespace AngularPlaybookService.Controllers
       return Request.CreateResponse(HttpStatusCode.OK, existingTicker);
     }
 
+    
     public HttpResponseMessage Delete(int id)
     {
       if (id <= 0)
@@ -160,24 +164,33 @@ namespace AngularPlaybookService.Controllers
     }
 
     [HttpGet()]
-    [Route("api/Ticker/getAveragePrice/")]
-    public HttpResponseMessage getAveragePrice(int id)
+    [Route("api/Ticker/getTickerDetails/")]
+    public HttpResponseMessage getTickerDetails(int id)
     {
       AngularPlaybookEntities entities = new AngularPlaybookEntities();
 
       try
       {
-        var transactions = entities.Transactions
-            .Where(t => t.TickerId == id);
         var checkNull = entities.Transactions
             .Where(t => t.TickerId == id).FirstOrDefault();
+        var transactions = entities.Transactions
+            .Where(t => t.TickerId == id);
+        var tickers = entities.Tickers
+          .Where(t => t.TickerId == id).FirstOrDefault<Ticker>();
+                              
         var debug = checkNull;
         if (checkNull != null)
         {
           var sum = transactions.Sum(p => (float)p.TransactionPrice * p.TransactionQuantity);
           var totalQuantity = transactions.Sum(p => p.TransactionQuantity);
 
-          return Request.CreateResponse(HttpStatusCode.OK, sum / totalQuantity);
+          var collection = new Dictionary<string, string>();
+          collection.Add("tickerId", tickers.TickerId.ToString());
+          collection.Add("symbol", tickers.Symbol);
+          collection.Add("stockName", tickers.StockName);
+          collection.Add("averagePrice", (sum / totalQuantity).ToString());
+          collection.Add("totalQuantity", (totalQuantity).ToString());
+          return Request.CreateResponse(HttpStatusCode.OK, collection);
         }
         else
         {
