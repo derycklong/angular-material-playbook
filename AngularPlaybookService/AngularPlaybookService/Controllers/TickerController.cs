@@ -16,7 +16,29 @@ namespace AngularPlaybookService.Controllers
     public HttpResponseMessage Get()
     {
       AngularPlaybookEntities entities = new AngularPlaybookEntities();
-      var result = from ticker in entities.Tickers
+
+      var result1 = entities.Tickers.Select(ticker => new
+      {
+        tickerId = ticker.TickerId,
+        stockName = ticker.StockName,
+        symbol = ticker.Symbol,
+        stockLastPrice = ticker.StockLastPrice,
+        transactions = entities.Transactions.Where(trans => trans.TickerId == ticker.TickerId).Select(s =>
+           
+          new
+          {
+            transactionId = s.TransactionId,
+            transactionType = s.TransactionType,
+            purchasePrice = s.TransactionPrice,
+            purchaseQuantity = s.TransactionQuantity,
+            transactionDate = s.TransactionDate,
+          }
+        )
+
+
+      });
+        
+        var result = from ticker in entities.Tickers
                    select new
                    {
                      tickerId = ticker.TickerId,
@@ -25,14 +47,16 @@ namespace AngularPlaybookService.Controllers
                      stockLastPrice = ticker.StockLastPrice,
                      transactions = from trans in entities.Transactions
                                     where ticker.TickerId == trans.TickerId
+                                    let query = entities.Transactions.Where(t => t.TickerId == ticker.TickerId)
                                     select new
                                     {
                                       transactionId = trans.TransactionId,
                                       transactionType = trans.TransactionType,
                                       purchasePrice = trans.TransactionPrice,
                                       purchaseQuantity = trans.TransactionQuantity,
-                                      transactionDate = trans.TransactionDate
-                                    }
+                                      transactionDate = trans.TransactionDate,
+
+                                    },
                    };
       return Request.CreateResponse(HttpStatusCode.OK, result);
 
@@ -173,24 +197,66 @@ namespace AngularPlaybookService.Controllers
       {
         var checkNull = entities.Transactions
             .Where(t => t.TickerId == id).FirstOrDefault();
-        var transactions = entities.Transactions
-            .Where(t => t.TickerId == id);
         var tickers = entities.Tickers
           .Where(t => t.TickerId == id).FirstOrDefault<Ticker>();
                               
         var debug = checkNull;
         if (checkNull != null)
         {
-          var sum = transactions.Sum(p => (float)p.TransactionPrice * p.TransactionQuantity);
-          var totalQuantity = transactions.Sum(p => p.TransactionQuantity);
+          var buyTransaction = entities.Transactions.Where(t => t.TickerId == id && t.TransactionType == "Buy");
+          var sellTransaction = entities.Transactions.Where(t => t.TickerId == id && t.TransactionType == "Sell");
 
-          var collection = new Dictionary<string, string>();
-          collection.Add("tickerId", tickers.TickerId.ToString());
+          var buySum = 0.0;
+          var buyQuantity = 0.0;
+          var sellSum = 0.0;
+          var sellQuantity = 0.0;
+
+
+          if (buyTransaction.Count() > 0)
+          {
+             buySum = buyTransaction.Sum(t => (double)t.TransactionPrice * t.TransactionQuantity);
+             buyQuantity = buyTransaction.Sum(p => p.TransactionQuantity);
+          }
+
+          if (sellTransaction.Count() > 0)
+          {
+            sellSum = sellTransaction.Sum(t => (double)t.TransactionPrice * t.TransactionQuantity);
+            sellQuantity = sellTransaction.Sum(p => p.TransactionQuantity);
+
+          }
+
+          var averagePrice = buySum / buyQuantity;
+          var averagePriceWithSell = (buySum - sellSum)/(buyQuantity-sellQuantity);
+          var totalQuantity = buyQuantity - sellQuantity;
+          var pl = (buyQuantity * (double)tickers.StockLastPrice) - buySum;
+          var plPercentage = (((buyQuantity * (double)tickers.StockLastPrice)/buySum)*100)-100;
+
+
+
+          var collection = new Dictionary<string, dynamic>();
+          collection.Add("tickerId", tickers.TickerId);
           collection.Add("symbol", tickers.Symbol);
           collection.Add("stockName", tickers.StockName);
-          collection.Add("averagePrice", (sum / totalQuantity).ToString());
-          collection.Add("totalQuantity", (totalQuantity).ToString());
-          return Request.CreateResponse(HttpStatusCode.OK, collection);
+          collection.Add("lastPrice", tickers.StockLastPrice);
+          collection.Add("averagePrice", averagePrice);
+          collection.Add("totalQuantity", totalQuantity);
+          collection.Add("averagePriceWithSell", averagePriceWithSell);
+          collection.Add("p&l", pl);
+          collection.Add("p&lPercentage", plPercentage);
+
+          var json = new
+          {
+            tickerId = tickers.TickerId,
+            symbol = tickers.Symbol,
+            stockName = tickers.StockName,
+            lastPrice = tickers.StockLastPrice,
+            averagePrice = averagePrice,
+            totalQuantity = totalQuantity,
+            averagePriceWithSell = averagePriceWithSell,
+            pnl = pl,
+            pnlPercentage = plPercentage
+          };
+          return Request.CreateResponse(HttpStatusCode.OK, json);
         }
         else
         {
@@ -204,6 +270,8 @@ namespace AngularPlaybookService.Controllers
        
       
     }
+
+
   }
 }
 

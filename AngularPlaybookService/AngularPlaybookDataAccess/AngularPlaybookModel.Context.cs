@@ -16,7 +16,7 @@ namespace AngularPlaybookDataAccess
     public partial class AngularPlaybookEntities : DbContext
     {
         public AngularPlaybookEntities()
-            : base("name=AngularPlaybookEntities")
+            : base("name=AngularPlaybookEntities1")
         {
         }
     

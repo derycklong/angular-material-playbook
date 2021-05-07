@@ -42,7 +42,7 @@ export class TickerService {
       console.log('fire update')
       let options = { headers: new HttpHeaders({ 'content-type': 'application/json'}
       )}
-      return this.http.put<ITicker>(this.tickerApi,portfolio,options)
+      return this.http.put(this.tickerApi,portfolio,options)
         .pipe(catchError(this.handleError.bind(this)))
     }
 
