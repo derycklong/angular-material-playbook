@@ -27,6 +27,8 @@ namespace AngularPlaybookService.Controllers
            
           new
           {
+            
+            
             transactionId = s.TransactionId,
             transactionType = s.TransactionType,
             purchasePrice = s.TransactionPrice,
@@ -37,26 +39,35 @@ namespace AngularPlaybookService.Controllers
 
 
       });
-        
-        var result = from ticker in entities.Tickers
+
+      var result = from ticker in entities.Tickers
                    select new
                    {
                      tickerId = ticker.TickerId,
                      stockName = ticker.StockName,
                      symbol = ticker.Symbol,
                      stockLastPrice = ticker.StockLastPrice,
+
                      transactions = from trans in entities.Transactions
                                     where ticker.TickerId == trans.TickerId
-                                    let query = entities.Transactions.Where(t => t.TickerId == ticker.TickerId)
                                     select new
                                     {
                                       transactionId = trans.TransactionId,
                                       transactionType = trans.TransactionType,
                                       purchasePrice = trans.TransactionPrice,
                                       purchaseQuantity = trans.TransactionQuantity,
-                                      transactionDate = trans.TransactionDate,
-
+                                      transactionDate = trans.TransactionDate
                                     },
+                     tickerDetails = from trans in entities.Transactions
+                                    let buyTransaction = entities.Transactions.Where(t => t.TickerId == ticker.TickerId && trans.TransactionType == "Buy")
+                                    let sellTransaction = entities.Transactions.Where(t => t.TickerId == ticker.TickerId && trans.TransactionType == "Sell")
+                                    select new
+                                    {
+                                      buySum = buyTransaction.Count() > 0 ? buyTransaction.Sum(t => (double)t.TransactionPrice * t.TransactionQuantity) : 0
+                                    }
+
+
+
                    };
       return Request.CreateResponse(HttpStatusCode.OK, result);
 
@@ -84,7 +95,8 @@ namespace AngularPlaybookService.Controllers
                                         transactionType = trans.TransactionType,
                                         purchasePrice = trans.TransactionPrice,
                                         purchaseQuantity = trans.TransactionQuantity,
-                                        transactionDate = trans.TransactionDate
+                                        transactionDate = trans.TransactionDate,
+
                                       }
                      };
         if (result.Any())
