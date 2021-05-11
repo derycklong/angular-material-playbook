@@ -24,6 +24,16 @@ export class TickerService {
       )
     }
 
+    getTransactions(){
+      return this.http.get<ITicker[]>(this.tickerApi).pipe(
+        map(data => data
+          .map(ticker => ticker.transactions.map(transaction=> transaction.transactionDate))
+        ),
+        tap(data => console.log('All', JSON.stringify(data))),
+        catchError(this.handleError.bind(this))
+      )
+    }
+
     getTicker(id){
       return this.http.get(this.tickerApi+'/'+id).pipe(
         tap(data => console.log('All', JSON.stringify(data))),

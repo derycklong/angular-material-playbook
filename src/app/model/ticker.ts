@@ -5,7 +5,7 @@ export interface ITicker{
     stockLastPrice:number,
     stockAveragePrice?:number,
     stockQuantity?:number,
-    transaction?:ITransaction[]
+    transactions?:ITransaction[]
 }
 
 export interface ITransaction{

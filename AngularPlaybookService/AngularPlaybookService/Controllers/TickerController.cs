@@ -41,12 +41,20 @@ namespace AngularPlaybookService.Controllers
       });
 
       var result = from ticker in entities.Tickers
+                   let buyTransaction = entities.Transactions.Where(t => t.TickerId == ticker.TickerId && t.TransactionType == "Buy")
+                   let sellTransaction = entities.Transactions.Where(t => t.TickerId == ticker.TickerId && t.TransactionType == "Sell")
+                   let buySum = buyTransaction.Count() > 0 ? buyTransaction.Sum(t => (double)t.TransactionPrice * t.TransactionQuantity) : 0
+                   let sellSum = sellTransaction.Count() > 0 ? sellTransaction.Sum(t => (double)t.TransactionPrice * t.TransactionQuantity) : 0
                    select new
                    {
                      tickerId = ticker.TickerId,
                      stockName = ticker.StockName,
                      symbol = ticker.Symbol,
                      stockLastPrice = ticker.StockLastPrice,
+                     buySum = buySum,
+                     sellSum = sellSum,
+                            
+
 
                      transactions = from trans in entities.Transactions
                                     where ticker.TickerId == trans.TickerId
@@ -57,17 +65,7 @@ namespace AngularPlaybookService.Controllers
                                       purchasePrice = trans.TransactionPrice,
                                       purchaseQuantity = trans.TransactionQuantity,
                                       transactionDate = trans.TransactionDate
-                                    },
-                     tickerDetails = from trans in entities.Transactions
-                                    let buyTransaction = entities.Transactions.Where(t => t.TickerId == ticker.TickerId && trans.TransactionType == "Buy")
-                                    let sellTransaction = entities.Transactions.Where(t => t.TickerId == ticker.TickerId && trans.TransactionType == "Sell")
-                                    select new
-                                    {
-                                      buySum = buyTransaction.Count() > 0 ? buyTransaction.Sum(t => (double)t.TransactionPrice * t.TransactionQuantity) : 0
                                     }
-
-
-
                    };
       return Request.CreateResponse(HttpStatusCode.OK, result);
 
@@ -282,6 +280,7 @@ namespace AngularPlaybookService.Controllers
        
       
     }
+
 
 
   }
