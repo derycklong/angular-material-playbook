@@ -67,6 +67,7 @@ export class CreateTransactionComponent implements OnInit {
 
         let transaction:ITransaction ={
             tickerId : this.tickerDetail.tickerId,
+            transactionId : null,
             transactionType : newEntry.transactiontype,
             transactionPrice : +newEntry.transactionprice,
             transactionQuantity : +newEntry.transactionquantity,

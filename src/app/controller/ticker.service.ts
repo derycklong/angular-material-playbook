@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders,HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of, throwError } from "rxjs";
-import { ITicker } from '../model/ticker'
+import { ITicker, ITransaction } from '../model/ticker'
 import { catchError, tap, map} from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from "@angular/router";
@@ -24,10 +24,12 @@ export class TickerService {
       )
     }
 
-    getTransactions(){
+    getTransactions() :Observable<ITransaction[]>{
       return this.http.get<ITicker[]>(this.tickerApi).pipe(
         map(data => data
-          .map(ticker => ticker.transactions.map(transaction=> transaction.transactionDate))
+          .map(ticker => ticker.transactions.map(transaction=> ({
+            ...transaction
+          })))
         ),
         tap(data => console.log('All', JSON.stringify(data))),
         catchError(this.handleError.bind(this))

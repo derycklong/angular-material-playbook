@@ -10,6 +10,7 @@ export interface ITicker{
 
 export interface ITransaction{
     tickerId:number,
+    transactionId:number,
     transactionType:string,
     transactionPrice:number,
     transactionQuantity:number,

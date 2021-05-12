@@ -60,10 +60,11 @@ namespace AngularPlaybookService.Controllers
                                     where ticker.TickerId == trans.TickerId
                                     select new
                                     {
+                                      tickerId = ticker.TickerId,
                                       transactionId = trans.TransactionId,
                                       transactionType = trans.TransactionType,
-                                      purchasePrice = trans.TransactionPrice,
-                                      purchaseQuantity = trans.TransactionQuantity,
+                                      transactionPrice = trans.TransactionPrice,
+                                      transactionQuantity = trans.TransactionQuantity,
                                       transactionDate = trans.TransactionDate
                                     }
                    };
@@ -91,8 +92,8 @@ namespace AngularPlaybookService.Controllers
                                       {
                                         transactionId = trans.TransactionId,
                                         transactionType = trans.TransactionType,
-                                        purchasePrice = trans.TransactionPrice,
-                                        purchaseQuantity = trans.TransactionQuantity,
+                                        transactionPrice = trans.TransactionPrice,
+                                        transactionQuantity = trans.TransactionQuantity,
                                         transactionDate = trans.TransactionDate,
 
                                       }

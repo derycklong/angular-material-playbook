@@ -47,9 +47,7 @@ export class PortfolioComponent implements OnInit, AfterViewInit{
             console.log('do hit here please')
             this.dataSource.data = res
         })
-        this.tickerService.getTransactions().subscribe(res => {
-            console.log(res)
-        })
+
         this.dataSource.filterPredicate = (data, filter): boolean => {
             console.log('data')
             console.log(filter)
